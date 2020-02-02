@@ -1,28 +1,33 @@
 import argparse
 import json
+import os
 import time
 
 from bs4 import BeautifulSoup
-
+import networkx as nx
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
-import networkx as nx
+
+CHROME_DRIVER_PATH = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    "chromedriver"
+)
 
 
 def main(amazon_url, graph):
     books = scrape_books(amazon_url=amazon_url)
     relationships = scrape_relationships(books)
-
     export_graph(books, relationships, graph)
 
 
 def scrape_books(amazon_url):
     """
-    Scrape book data from an "Top 100" list
+    Scrape book data from a "Top 100" list.
     """
-    browser = webdriver.Chrome()
-    # go to the "Top 100" list home page
+    browser = webdriver.Chrome(
+        executable_path=CHROME_DRIVER_PATH
+    )    # go to the "Top 100" list home page
     browser.get(amazon_url)
 
     books = []
@@ -53,7 +58,9 @@ def scrape_relationships(books):
     Scrape the relationships between books based on the amazon
     "Customers who bought this item also bought" feature
     """
-    browser = webdriver.Chrome()
+    browser = webdriver.Chrome(
+        executable_path=CHROME_DRIVER_PATH
+    )
     relationships = []
 
     for book in books:
