@@ -7,7 +7,7 @@
  
 Creates network graphs based on amazon "Customers who bought this item also bought" features.
 
-**Political best sellers**
+**Political Best Sellers**
 ---
 
 To what extent to readers of political literature balance their reading across the political spectrum?
